@@ -75,5 +75,30 @@ namespace API.Controllers
             }
             return BadRequest("role Deletion Failed.");
         }
+
+
+        [HttpPost("assign")]
+        public async Task<IActionResult> AssignRole([FromBody] RoleAssignDto roleAssignDto)
+        {
+            var user = await _userManager.FindByIdAsync(roleAssignDto.UserId);
+            if (user is null)
+            {
+                return NotFound("User NotFound.");
+            }
+
+            var role = await _roleManager.FindByIdAsync(roleAssignDto.RoleId);
+            if (role is null)
+            {
+                return NotFound("Role NotFound.");
+            }
+
+            var Result = await _userManager.AddToRoleAsync(user, role.Name!);
+            if (Result.Succeeded)
+            {
+                return Ok(new { Message = "Role Assigned Successfully ." });
+            }
+            var error = Result.Errors.FirstOrDefault();
+            return BadRequest(error!.Description);
+        }
     }
 }
