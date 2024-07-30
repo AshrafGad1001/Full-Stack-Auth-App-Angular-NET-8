@@ -5,6 +5,7 @@ using API.DTOs;
 using API.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using RouteAttribute = Microsoft.AspNetCore.Mvc.RouteAttribute;
 
@@ -146,7 +147,19 @@ namespace API.Controllers
         }
 
 
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<UserDetailDto>>> GetUsers()
+        {
+            var users = await _userManager.Users.Select(U => new UserDetailDto
+            {
+                Id = U.Id,
+                Email = U.Email,
+                FullName = U.FullName,
+                Roles = _userManager.GetRolesAsync(U).Result.ToArray()
+            }).ToListAsync();
 
+            return Ok(users);
+        }
 
 
 
