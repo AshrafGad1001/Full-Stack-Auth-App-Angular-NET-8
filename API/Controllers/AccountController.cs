@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Text;
 using API.DTOs;
 using API.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,7 +12,7 @@ using RouteAttribute = Microsoft.AspNetCore.Mvc.RouteAttribute;
 
 namespace API.Controllers
 {
-
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     /*
@@ -33,6 +34,7 @@ namespace API.Controllers
         /*
             - api/account/register
         */
+        [AllowAnonymous]
         [HttpPost("register")]
         public async Task<ActionResult<string>> Register(RegisterDTO registerDTO)
         {
@@ -76,6 +78,7 @@ namespace API.Controllers
         /*
             - api/account/login
          */
+        [AllowAnonymous]
         [HttpPost("login")]
         public async Task<ActionResult<string>> login(LoginDto loginDto)
         {
@@ -116,10 +119,6 @@ namespace API.Controllers
 
         }
 
-
-
-
-
         [HttpGet("detail")]
         public async Task<ActionResult<UserDetailDto>> GetUserDetail()
         {
@@ -146,7 +145,6 @@ namespace API.Controllers
             });
         }
 
-
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UserDetailDto>>> GetUsers()
         {
@@ -161,12 +159,9 @@ namespace API.Controllers
             return Ok(users);
         }
 
-
-
         /*
         -Function To Generate Token
         */
-
         private string GenerateToken(AppUser user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();

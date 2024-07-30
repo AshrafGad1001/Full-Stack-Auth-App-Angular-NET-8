@@ -1,10 +1,13 @@
 using API.DTOs;
 using API.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [ApiController]
     [Route("api/[controller]")]
     public class RolesController : ControllerBase
@@ -40,9 +43,37 @@ namespace API.Controllers
             }
             return BadRequest("Role Creation Failed.");
         }
-    
-    
-        
-    
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<RoleResponseDto>>> GetRoles()
+        {
+            //List Of Users With Total user Count
+            var roles = await _roleManager.Roles.Select(r => new RoleResponseDto
+            {
+                Id = r.Id,
+                Name = r.Name,
+                TotalUsers = _userManager.GetUsersInRoleAsync(r.Name!).Result.Count
+            }).ToListAsync();
+
+            return Ok(roles);
+        }
+
+        [HttpDelete]
+        public async Task<ActionResult> DeleteRole(string id)
+        {
+            //Find Role By Id 
+            var role = await _roleManager.FindByIdAsync(id);
+
+            if (role is null)
+            {
+                return NotFound("Role Not Found");
+            }
+            var Result = await _roleManager.DeleteAsync(role);
+            if (Result.Succeeded)
+            {
+                return Ok(new { message = "Role Deleted Successfully" });
+            }
+            return BadRequest("role Deletion Failed.");
+        }
     }
 }
