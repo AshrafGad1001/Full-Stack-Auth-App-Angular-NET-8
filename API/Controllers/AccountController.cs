@@ -29,8 +29,6 @@ namespace API.Controllers
             this._roleManager = role;
             this._configuration = configuration;
         }
-
-
         /*
             - api/account/register
         */
@@ -74,9 +72,6 @@ namespace API.Controllers
             });
 
         }
-
-
-
         /*
             - api/account/login
          */
@@ -120,6 +115,35 @@ namespace API.Controllers
 
         }
 
+
+
+
+
+        [HttpGet("detail")]
+        public async Task<ActionResult<UserDetailDto>> GetUserDetail()
+        {
+            var CurrentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await _userManager.FindByIdAsync(CurrentUserId!);
+
+            if (user is null)
+            {
+                return NotFound(new AuthResponseDto
+                {
+                    IsSuccess = false,
+                    Message = "User Not Found"
+                });
+            }
+            return Ok(new UserDetailDto
+            {
+                Id = user.Id,
+                Email = user.Email,
+                FullName = user.FullName,
+                Roles = [.. await _userManager.GetRolesAsync(user)],
+                PhoneNumber = user.PhoneNumber,
+                PhoneNumberConfirmed = user.PhoneNumberConfirmed,
+                AccessFailedCount = user.AccessFailedCount
+            });
+        }
 
 
 
