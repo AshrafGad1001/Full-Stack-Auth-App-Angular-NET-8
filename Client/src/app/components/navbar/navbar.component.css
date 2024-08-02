@@ -1,0 +1,14 @@
+.nav-bar {
+  background-color: #004181;
+}
+.nav-bar a {
+  color: white;
+}
+.nav-link-appName {
+  font-size: 22px;
+  font-weight: 600;
+}
+.nav-link-item {
+  font-size: 18px;
+  font-weight: 600;
+}
