@@ -1,0 +1,15 @@
+.btn-global {
+  background-color: #004181;
+  padding: 8px 30px;
+  border-radius: 22px;
+  -webkit-border-radius: 22px;
+  -moz-border-radius: 22px;
+  -ms-border-radius: 22px;
+  -o-border-radius: 22px;
+  color: white;
+  font-weight: 500;
+  transition: background-color 0.3s ease; 
+}
+.btn-global:hover {
+  background-color: #166534;
+}
