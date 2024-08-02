@@ -1,3 +1,4 @@
+import { AuthService } from './../../services/auth.service';
 import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
@@ -18,6 +19,10 @@ import { RouterLink } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
+  AuthService = inject(AuthService);
+
+
+
   form!: FormGroup;
   fb = inject(FormBuilder);
 
@@ -30,6 +35,8 @@ export class LoginComponent implements OnInit {
     });
   }
   login() {
-
+    this.AuthService.login(this.form.value).subscribe((response) => {
+      console.log(response);
+    });
   }
 }
