@@ -1,6 +1,7 @@
+import { AuthService } from './../../services/auth.service';
 import { RoleService } from './../../services/role.service';
 import { Component, inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
@@ -27,7 +28,7 @@ import { AsyncPipe } from '@angular/common';
   styleUrl: './register.component.css'
 })
 export class RegisterComponent implements OnInit {
-
+  AuthService = inject(AuthService);
   roleService = inject(RoleService);
   $roles!: Observable<Role[]>;
   fb = inject(FormBuilder);
@@ -35,7 +36,13 @@ export class RegisterComponent implements OnInit {
   router = inject(Router);
 
 
-
+  register() {
+    this.AuthService.register(this.registerForm.value).subscribe({
+      next: (response) => {
+        console.log(response);
+      }
+    });
+  }
 
 
 
@@ -51,12 +58,21 @@ export class RegisterComponent implements OnInit {
       fullName: ['', [Validators.required]],
       roles: [''],
       confirmPassword: ['', [Validators.required]]
-    });
+    },
+      {
 
+        validator: this.passwordMatchValidator
+      }
+    );
   }
 
-
-  register() {
-
+  private passwordMatchValidator(control: AbstractControl): { [key: string]: boolean } | null {
+    const password = control.get('password')?.value;
+    const confirmPassword = control.get('confirmPassword')?.value;
+    if (password != confirmPassword) {
+      return { passwordMismatch: true }
+    }
+    return null;
   }
+
 }
