@@ -8,8 +8,22 @@
   -o-border-radius: 22px;
   color: white;
   font-weight: 500;
-  transition: background-color 0.3s ease; 
+  transition: background-color 0.3s ease;
 }
 .btn-global:hover {
   background-color: #166534;
+}
+.welcome-msg {
+  /*border-bottom: 1px solid #004181;
+  */
+  background-color: rgb(236, 236, 236);
+  padding: 12px;
+  border: radius 20px;
+  letter-spacing: 1.2px;
+  font-weight: 600 !important;
+  font-style: italic;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  -o-border-radius: 20px;
 }

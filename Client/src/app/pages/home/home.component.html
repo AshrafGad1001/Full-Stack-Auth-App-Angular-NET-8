@@ -1,13 +1,27 @@
 <div class="flex items-center flex-col pt-40 h-screen">
     <div class="h-screen">
         <h1 class="text-4xl text-center font-bold my-10">
-            Welcome To <span class="text-5xl text-green-800 ">MyApp</span>
+            Welcome To <span class="text-5xl  text-blue-900  ">MyApp</span>
         </h1>
+
+
+
         <div class="flex flex-col items-center gap-5 justify-center">
+            @if( AuthService.getUserDetail()){
+            <h2 class="text-2xl welcome-msg">Welcome
+                <span class="text-3xl  text-blue-900  ">
+                    {{AuthService.getUserDetail()?.fullName.split(" ")[0]}}
+                </span>
+            </h2>
+            }@else {
             <h2 class="text-2xl">you are not logged in</h2>
             <button class="btn-global">
                 <a mat-button class="nav-link-item" routerLink="/login">Login</a>
             </button>
+            }
+
+
+
         </div>
     </div>
 </div>

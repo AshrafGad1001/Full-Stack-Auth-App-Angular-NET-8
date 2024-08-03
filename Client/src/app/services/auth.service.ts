@@ -25,9 +25,7 @@ export class AuthService {
       })
     );
   }
-
   private getToken = (): string | null => localStorage.getItem(this.tokenKey) || '';
-
   isLoggedIn = (): boolean => {
     const token = this.getToken();
     if (!token)
@@ -52,5 +50,22 @@ export class AuthService {
   logout(): void {
     localStorage.removeItem(this.tokenKey);
   }
+
+  getUserDetail = () => {
+    const token = this.getToken();
+    if (!token)
+      return null;
+
+    const decodeToken: any = jwtDecode(token);
+
+    const userDetail = {
+      id: decodeToken.nameid,
+      fullName: decodeToken.name,
+      email: decodeToken.email,
+      roles: decodeToken.role || []
+    }
+    return userDetail;
+  }
+
 
 }

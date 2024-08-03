@@ -5,6 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { Router, RouterLink } from '@angular/router';
 import { MatMenuModule } from '@angular/material/menu';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-navbar',
@@ -16,6 +17,7 @@ import { MatMenuModule } from '@angular/material/menu';
       MatButtonModule,
       MatMenuModule,
       RouterLink,
+      CommonModule
     ],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'
