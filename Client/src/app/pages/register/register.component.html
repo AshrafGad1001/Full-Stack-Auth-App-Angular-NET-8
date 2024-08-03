@@ -1,5 +1,5 @@
 <div class="h-screen flex items-center justify-center">
-    <form class="shadow-md rounded-md p-5 bg-white w-1/2 text-left">
+    <form class="shadow-md rounded-md p-5 bg-white w-1/2 text-left" [formGroup]="registerForm" (ngSubmit)="register()">
         <div class="py-2 ">
             <h1 class="font-bold py-2 text-blue-900 ">Register</h1>
             <h6 class="text-slate-600 text-base">Create Your Account</h6>
@@ -8,7 +8,7 @@
         <div class="w-full">
             <mat-form-field appearance="fill" class="w-full">
                 <mat-label>Email</mat-label>
-                <input type="email" matInput placeholder="Email" />
+                <input type="email" matInput placeholder="Email" formControlName="email" />
                 <mat-icon class="form-icon" matPrefix>email</mat-icon>
             </mat-form-field>
         </div>
@@ -16,7 +16,7 @@
         <div class="w-full">
             <mat-form-field appearance="fill" class="w-full">
                 <mat-label>Full Name</mat-label>
-                <input matInput placeholder="Full Name" />
+                <input matInput placeholder="Full Name" formControlName="fullName" />
                 <mat-icon class="form-icon" matPrefix>person</mat-icon>
             </mat-form-field>
         </div>
@@ -24,9 +24,10 @@
         <div class="w-full">
             <mat-form-field appearance="fill" class="w-full">
                 <mat-label>Roles</mat-label>
-                <mat-select multiple>
-                    <mat-option>User</mat-option>
-                    <mat-option>Admin</mat-option>
+                <mat-select multiple formControlName="roles">
+                    @for(item of $roles |async;track item){
+                    <mat-option [value]="item.name">{{item.name}}</mat-option>
+                    }
                 </mat-select>
                 <mat-icon class="form-icon" matPrefix>groups</mat-icon>
             </mat-form-field>
@@ -35,7 +36,7 @@
         <div class="w-full">
             <mat-form-field appearance="fill" class="w-full">
                 <mat-label>Password</mat-label>
-                <input type="password" matInput placeholder="password" />
+                <input type="password" matInput placeholder="password" formControlName="password" />
                 <mat-icon class="form-icon" matPrefix>lock</mat-icon>
             </mat-form-field>
         </div>
@@ -43,7 +44,7 @@
         <div class="w-full">
             <mat-form-field appearance="fill" class="w-full">
                 <mat-label>Confirm Password</mat-label>
-                <input type="password" matInput placeholder="Confirm password" />
+                <input type="password" matInput placeholder="Confirm password" formControlName="confirmPassword" />
                 <mat-icon class="form-icon" matPrefix>lock</mat-icon>
             </mat-form-field>
         </div>
