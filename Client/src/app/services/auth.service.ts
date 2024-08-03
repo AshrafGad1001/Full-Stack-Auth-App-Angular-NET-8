@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment.development';
 import { map, Observable, retry } from 'rxjs';
-
 import { HttpClient } from '@angular/common/http';
 import { LoginRequest } from '../Interfaces/login-request';
 import { AuthResponse } from '../Interfaces/auth-response';
+import { jwtDecode } from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root'
@@ -25,4 +25,32 @@ export class AuthService {
       })
     );
   }
+
+  private getToken = (): string | null => localStorage.getItem(this.tokenKey) || '';
+
+  isLoggedIn = (): boolean => {
+    const token = this.getToken();
+    if (!token)
+      return false;
+    return !this.isTokenExpired();
+  }
+  private isTokenExpired() {
+    const token = this.getToken();
+    if (!token)
+      return true;
+
+    const decode = jwtDecode(token);
+
+    const isTokenExpired = Date.now() >= decode['exp']! * 1000;
+
+    if (isTokenExpired)
+      return this.logout();
+
+    return isTokenExpired;
+
+  }
+  logout(): void {
+    localStorage.removeItem(this.tokenKey);
+  }
+
 }

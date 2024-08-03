@@ -3,7 +3,8 @@ import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { RouterLink } from '@angular/router';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +13,8 @@ import { RouterLink } from '@angular/router';
     MatInputModule,
     MatIconModule,
     ReactiveFormsModule,
-    RouterLink
+    RouterLink,
+    MatSnackBarModule
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
@@ -20,8 +22,8 @@ import { RouterLink } from '@angular/router';
 export class LoginComponent implements OnInit {
 
   AuthService = inject(AuthService);
-
-
+  matSnackBar = inject(MatSnackBar);
+  router = inject(Router);
 
   form!: FormGroup;
   fb = inject(FormBuilder);
@@ -35,8 +37,20 @@ export class LoginComponent implements OnInit {
     });
   }
   login() {
-    this.AuthService.login(this.form.value).subscribe((response) => {
-      console.log(response);
+    this.AuthService.login(this.form.value).subscribe({
+      next: (response) => {
+        this.matSnackBar.open(response.message, 'Close', {
+          duration: 5000,
+          horizontalPosition: 'center'
+        })
+        this.router.navigate(['/'])
+      },
+      error: (error) => {
+        this.matSnackBar.open(error.error.message, 'Close', {
+          duration: 7000,
+          horizontalPosition: 'center'
+        })
+      }
     });
   }
 }
