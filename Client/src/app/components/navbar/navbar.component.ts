@@ -1,3 +1,4 @@
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { AuthService } from './../../services/auth.service';
 import { Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
@@ -17,13 +18,15 @@ import { CommonModule } from '@angular/common';
       MatButtonModule,
       MatMenuModule,
       RouterLink,
-      CommonModule
+      CommonModule,
+      MatSnackBarModule
     ],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'
 })
 export class NavbarComponent {
   AuthService = inject(AuthService);
+  MatSnackBar = inject(MatSnackBar)
   router = inject(Router);
 
 
@@ -31,4 +34,12 @@ export class NavbarComponent {
     return this.AuthService.isLoggedIn();
   }
 
+  logout = () => {
+    this.AuthService.logout();
+    this.MatSnackBar.open('Logout Success !', "Close", {
+      duration: 5000,
+      horizontalPosition: 'center'
+    });
+    this.router.navigate(['/login']);
+  }
 }
