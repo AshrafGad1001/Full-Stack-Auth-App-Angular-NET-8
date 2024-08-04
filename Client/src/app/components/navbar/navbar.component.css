@@ -13,3 +13,10 @@
   font-size: 18px;
   font-weight: 600;
 }
+
+.nav-link-item-users {
+  font-size: 18px;
+  font-weight: 600;
+  display: flex;
+  flex-direction: row !important;
+}
