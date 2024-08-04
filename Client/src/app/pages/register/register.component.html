@@ -1,5 +1,19 @@
 <div class="h-screen flex items-center justify-center">
     <form class="shadow-md rounded-md p-5 bg-white w-1/2 text-left" [formGroup]="registerForm" (ngSubmit)="register()">
+
+
+        @for( error of errors;track error){
+        <div
+            class="bg-red-200 border border-red-400 mb-3 flex flex-col gap-2 text-blue-950 px-4 py-4 rounded-md relative ">
+            <div class="text-xs p-2">
+                {{error.description}}
+            </div>
+        </div>
+        }
+
+
+
+
         <div class="py-2 ">
             <h1 class="font-bold py-2 text-blue-900 ">Register</h1>
             <h6 class="text-slate-600 text-base">Create Your Account</h6>
@@ -49,7 +63,7 @@
             </mat-form-field>
         </div>
 
-        <button type="submit" [disabled]="!registerForm.valid"
+        <button type="submit"
             class="btn-Register w-full border border-slate-200 rounded-lg py-2 px-3 text-white font-bold">
             Register
         </button>
