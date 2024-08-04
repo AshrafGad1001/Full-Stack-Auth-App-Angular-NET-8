@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment.development';
-import { map, Observable, retry } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { LoginRequest } from '../Interfaces/login-request';
 import { AuthResponse } from '../Interfaces/auth-response';
@@ -75,4 +75,22 @@ export class AuthService {
     return this.http.get<UserDetails>(`${this.apiUrl}account/detail`);
   }
 
+
+  getAll = (): Observable<UserDetails[]> =>
+    this.http.get<UserDetails[]>(`${this.apiUrl}account`);
+
+  getRoles = (): string[] | null => {
+    const token = this.getToken();
+    if (!token) {
+      return null;
+    }
+    const decodeToken: any = jwtDecode(token);
+    return decodeToken.role || null;
+  }
+
+
+
+
 }
+
+
