@@ -1,0 +1,11 @@
+<div class="md:mx-96 my-40 rounded-md p-3 text-center">
+    <h1 class="text-2xl font-semibold text-blue-900">Role Management</h1>
+    <hr class="shadow-lgs my-3" />
+    <div class="flex w-full gap-3 ">
+        <div class="w-full">
+            <app-role-form [errorMessage]="errorMessage" [role]="role" (addRole)="createRole($event)" />
+        </div>
+
+    </div>
+
+</div>
