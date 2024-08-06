@@ -29,4 +29,10 @@ export class RoleService {
         })
       );
   }
+
+  assignRole = (userId: string, roleId: string): Observable<{ message: string }> => {
+    return this.http.post<{ message: string; }>(`${this.apiUrl}roles/assign`, {
+      userId, roleId
+    });
+  }
 }
