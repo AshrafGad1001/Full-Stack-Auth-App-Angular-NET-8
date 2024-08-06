@@ -7,6 +7,7 @@ import { authGuard } from './guards/auth.guard';
 import { UsersComponent } from './pages/users/users.component';
 import { roleGuard } from './guards/role.guard';
 import { RoleComponent } from './pages/role/role.component';
+import { RoleListComponent } from './components/role-list/role-list.component';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent },
@@ -28,5 +29,13 @@ export const routes: Routes = [
         data: {
             roles: ['Admin']
         }
-    }
+    },
+    {
+        path: 'role-list',
+        component: RoleListComponent,
+        canActivate: [roleGuard],
+        data: {
+            roles: ['Admin']
+        }
+    },
 ];
