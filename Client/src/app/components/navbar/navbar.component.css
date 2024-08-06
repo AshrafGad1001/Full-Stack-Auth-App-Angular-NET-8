@@ -14,9 +14,9 @@
   font-weight: 600;
 }
 
-.nav-link-item-users {
-  font-size: 18px;
-  font-weight: 600;
-  display: flex;
-  flex-direction: row !important;
+a.nav-item-custom {
+  font-size: 18px !important;
+  font-weight: 700;
+  border-left: 1px solid #ffffff;
+  padding-inline: 10px;
 }
