@@ -1,18 +1,18 @@
-<div class="my-40 rounded-md p-3 text-center ">
-    <h1 class="text-2xl font-semibold text-blue-900">Role Management</h1>
+<div class="my-10 rounded-md p-3 text-center">
+    <h1 class="text-3xl font-semibold text-left mx-5 mb-10 text-blue-900">Role Management</h1>
     <hr class="shadow-xl my-3" />
 
 
 
     <div class="flex w-full justify-between gap-10">
         <div class="w-full">
-            <h1 class="font-medium">Add Role</h1>
+            <h1 class="font-semibold text-blue-900">Add Role</h1>
             <app-role-form [errorMessage]="errorMessage" [role]="role" (addRole)="createRole($event)"></app-role-form>
         </div>
 
 
-        <div class="p-5 my-3">
-            <h1 class="font-medium">Assign Role To User</h1>
+        <div class="p-3">
+            <h1 class="font-semibold text-blue-900">Assign Role To User</h1>
             <div class="flex gap-5">
                 <mat-form-field class="mt-3">
                     <mat-label>User</mat-label>
@@ -34,8 +34,7 @@
 
             </div>
 
-            <button type="submit"
-            (click)="assignRole()"
+            <button type="submit" (click)="assignRole()"
                 class="btn-Register w-full border bg-blue-800 border-slate-200 rounded-lg py-2 px-3 text-white font-bold">
                 Assign Role
             </button>
